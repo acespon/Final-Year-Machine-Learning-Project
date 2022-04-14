@@ -22,6 +22,8 @@ def get_label_name(file_name):
     return label_name
 
 
+#get all the images and their labels into a data frame
+
 # for folder in os.listdir(IMAGES_FOLDER_PATH):
 #     print(folder)
 #     for image in os.listdir("./images/images/" + folder):
@@ -55,12 +57,13 @@ for image in images:
     processed.append(resized)
 processed = np.array(processed)
 
+
 # Split data into 75% train and 25% test subsets
 training_images, testing_images, training_labels, testing_labels = train_test_split(
     processed, labels, test_size=0.25, random_state=2, shuffle=True
 )
 
-# Create a classifier: KNN
+# Create a classifier:
 clf = SVC()
 # Train classifier
 clf.fit(training_images, training_labels)
