@@ -14,7 +14,6 @@ from sklearn.preprocessing import normalize
 from time import time
 import pickle
 
-
 IMAGES_FOLDER_PATH = "../resized/images/"
 ARTIST_CSV_PATH = "../artists.csv"
 
@@ -91,32 +90,6 @@ def Raw_HoG_ColHist(images):
     return vectors
 
 
-def count_classes(labels):
-    """this function counts the number of classes within the dataset"""
-    unique, counts = np.unique(labels, return_counts=True)
-    return dict(zip(unique, counts))
-
-
-def delete_class_from_dataset(images, labels, class_name):
-    """this function deletes a class from the dataset"""
-    for i in range(len(labels)):
-        if labels[i] == class_name:
-            del images[i]
-            del labels[i]
-    return images, labels
-
-
-def trim_classes(images, labels, counts, min):
-    """this function trims the dataset to only include classes with
-    at least min paintings and at most max paintings"""
-    imgs = images
-    labs = labels
-    for artist in counts:
-        if counts[artist] < min:
-            imgs, labs = delete_class_from_dataset(imgs, labs, artist)
-    return imgs, labs
-
-
 def read_csv(path):
     artists = pd.read_csv(path)
     artists.drop('id', axis=1, inplace=True)
@@ -164,7 +137,7 @@ def test_model(model, x_test, y_test):
 def cmatrix(model):
     """this function returns the confusion matrix of the model"""
     cm = confusion_matrix(model[2], test_model(model[0], model[1], model[2]), labels=model[0].classes_)
-    disp = metrics.ConfusionMatrixDisplay(confusion_matrix=cm,display_labels=model[0].classes_)
+    disp = metrics.ConfusionMatrixDisplay(confusion_matrix=cm, display_labels=model[0].classes_)
     disp.plot(cmap='Blues')
     plt.show()
     return disp.confusion_matrix

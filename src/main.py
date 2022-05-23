@@ -11,7 +11,7 @@ app = typer.Typer()
 # commands go here
 # sample command
 @app.command()
-def main(path: str = "../resized/images/", maxsamples: int = 150, minsamples: int = 50, width: int = 100,
+def main(path: str = "../resized/images/", maxsamples: int = 150, minsamples: int = 100, width: int = 100,
          height: int = 100):
     feature_extraction = -1
     while feature_extraction not in ['1', '2', '3', '4', '5']:
